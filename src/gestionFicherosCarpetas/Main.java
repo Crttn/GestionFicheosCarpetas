@@ -21,7 +21,7 @@ public class Main {
 				sc.nextLine();
 				String archivo = Estilos.solicitarTexto(sc, "Introduce el nombre y la extención del archivo: ");
 				Archivos.cargarArchivo(archivo);
-				Archivos.obtenerNulidad("7500503547");
+				Archivos.crearArchivos();
 				break;
 			case 2:
 				break;

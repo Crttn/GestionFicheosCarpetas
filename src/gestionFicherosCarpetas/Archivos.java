@@ -25,9 +25,24 @@ public class Archivos {
 		}
 	}
 	
-	public static void generarNulidad(Scanner sc) {
-		String path = Estilos.solicitarTexto(sc, "Introduce la ruta en la que se generarán las nulidades: ");
+	// Obtiene la ruta absoluta del archivo introducido 
+		public static String obtenerRutaAbsoluta(String nombre) {
+			String rutaAbsoluta;
+			return rutaAbsoluta = new File(nombre).getAbsolutePath();
+		}
+	
+	
+	public static void crearNulidad() {
+		
 	}
+	
+	
+
+
+
+	
+	
+	
 	
 	// Obtener todos los registros del archivo
 	public static void leerArchivo() {
@@ -40,13 +55,14 @@ public class Archivos {
 	}
 	
 	// Obtener un valor a partir del id de pago
-	public static void obtenerNulidad(String id) {
+	public static void obtenerIdpago(String id) {
 		for (String[] archivo : archivos) {
 			if (archivo[0].equals(id)) {
 				System.out.println(archivo[8]);
 			}
 		}
 	}
+	
 	
 	public static void crearArchivos() {
 		for (int i = 0; i < archivos.size(); i++) {
