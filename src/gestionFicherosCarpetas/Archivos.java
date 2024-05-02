@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Archivos {
-	
+
 	// Lista donde se almacenan todos los datos del archivo de nulidad
 	private static ArrayList<String[]> archivos = new ArrayList<>();
-	
+
 	// Carga los datos del arvhico de nulidad en el arrayList para su mejor manejo
 	public static void cargarArchivo(String nombre) {
 		archivos.clear();
@@ -22,41 +22,33 @@ public class Archivos {
 			System.out.println(Estilos.ANSI_RED + "Error al cargar los archivo." + Estilos.ANSI_WHITE);
 		}
 	}
-	
-	// Obtiene la ruta absoluta del archivo introducido 
+
+	// Obtiene la ruta absoluta del archivo introducido
 	public static String obtenerRutaAbsoluta(String nombre) {
 		String rutaAbsoluta;
 		return rutaAbsoluta = new File(nombre).getAbsolutePath();
 	}
+
 	
-	 public static String crearListaPagos(String empresa) {
-	        StringBuilder listaPagos = new StringBuilder();
-	       
-	        for (String[] archivo : archivos) {
-	            // Verificar que el array tiene al menos dos elementos antes de acceder al índice
-	            if (archivo.length >= 2 && archivo[1].equals(empresa)) {
-	                if (listaPagos.length() > 0) {
-	                    listaPagos.append(", ");
-	                }
-	                listaPagos.append(archivo[0]);
-	            }
-	        }
-	        return listaPagos.toString();
-	    }
-	
-	
-	public static void crearNulidad() {
-		
+	// Obtiene el id del pago y genera una lista
+	public static String crearListaPagos(String empresa) {
+		StringBuilder listaPagos = new StringBuilder();
+
+		for (String[] archivo : archivos) {
+			if (archivo.length >= 2 && archivo[1].equals(empresa)) {
+				if (listaPagos.length() > 0) {
+					listaPagos.append("\n");
+				}
+				listaPagos.append(archivo[0]);
+			}
+		}
+		return listaPagos.toString();
 	}
-	
-	
 
+	public static void crearNulidad() {
 
+	}
 
-	
-	
-	
-	
 	// Obtener todos los registros del archivo
 	public static void leerArchivo() {
 		for (String[] archivo : archivos) {
@@ -66,7 +58,7 @@ public class Archivos {
 			System.out.println();
 		}
 	}
-	
+
 	// Obtener un valor a partir del id de pago
 	public static void obtenerIdpago(String id) {
 		for (String[] archivo : archivos) {
@@ -76,14 +68,21 @@ public class Archivos {
 		}
 	}
 	
-	
+	public static void obtenerFecha(String id) {
+		for (String[] archivo : archivos) {
+			if (archivo[0].equals(id)) {
+				System.out.println(archivo[3]);
+			}
+		}
+	}
+
 	public static void crearArchivos() {
 		for (int i = 0; i < archivos.size(); i++) {
 			System.out.println(i++);
 		}
 	}
-	
-	// Crear archivo de nulidad a partir de un nombre || Generar los correos 
+
+	// Crear archivo de nulidad a partir de un nombre || Generar los correos
 	public static void crearArchivo(String nombre) {
 		File archivo;
 		archivo = new File(nombre + ".txt");

@@ -21,7 +21,9 @@ public class Main {
 				sc.nextLine();
 				String archivo = Estilos.solicitarTexto(sc, "Introduce el nombre y la extención del archivo: ");
 				Archivos.cargarArchivo(archivo);
-				System.out.println(Archivos.crearListaPagos("Empresa001"));
+				Entidades.generarCartaCNI("Modelo1");
+				Entidades.imprimirCarta();
+				//System.out.println(Archivos.crearListaPagos("Empresa004"));
 				break;
 			case 2:
 				break;
