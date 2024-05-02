@@ -12,24 +12,37 @@ public class Archivos {
 	// Carga los datos del arvhico de nulidad en el arrayList para su mejor manejo
 	public static void cargarArchivo(String nombre) {
 		archivos.clear();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(nombre + ".txt"));
+		try (BufferedReader br = new BufferedReader(new FileReader(nombre + ".txt"))) {
 			String linea;
 			while ((linea = br.readLine()) != null) {
 				String[] datoArchivo = linea.split("	");
 				archivos.add(datoArchivo);
 			}
-			br.close();
 		} catch (IOException e) {
 			System.out.println(Estilos.ANSI_RED + "Error al cargar los archivo." + Estilos.ANSI_WHITE);
 		}
 	}
 	
 	// Obtiene la ruta absoluta del archivo introducido 
-		public static String obtenerRutaAbsoluta(String nombre) {
-			String rutaAbsoluta;
-			return rutaAbsoluta = new File(nombre).getAbsolutePath();
-		}
+	public static String obtenerRutaAbsoluta(String nombre) {
+		String rutaAbsoluta;
+		return rutaAbsoluta = new File(nombre).getAbsolutePath();
+	}
+	
+	 public static String crearListaPagos(String empresa) {
+	        StringBuilder listaPagos = new StringBuilder();
+	       
+	        for (String[] archivo : archivos) {
+	            // Verificar que el array tiene al menos dos elementos antes de acceder al índice
+	            if (archivo.length >= 2 && archivo[1].equals(empresa)) {
+	                if (listaPagos.length() > 0) {
+	                    listaPagos.append(", ");
+	                }
+	                listaPagos.append(archivo[0]);
+	            }
+	        }
+	        return listaPagos.toString();
+	    }
 	
 	
 	public static void crearNulidad() {
