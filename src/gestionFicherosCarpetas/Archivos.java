@@ -39,10 +39,24 @@ public class Archivos {
 				if (listaPagos.length() > 0) {
 					listaPagos.append("\n");
 				}
-				listaPagos.append(archivo[0]);
+				listaPagos.append("IdPago: " + archivo[0] + " Total: " + archivo[2] + "€");
 			}
 		}
 		return listaPagos.toString();
+	}
+	
+	public static String obtenerTotalPago(String empresa) {		
+		double sum = 0;
+		
+		for (String[] archivo : archivos) {
+			if (archivo[1].equals(empresa)) {
+				String formateado = archivo[2].replace(".", "");
+				double cantidad = Double.parseDouble(formateado);
+				sum += cantidad;
+			}
+		}
+		System.out.println(sum);
+		return Double.toString(sum);
 	}
 
 	public static void crearNulidad() {

@@ -20,7 +20,7 @@ public class Entidades {
 			String linea;
 
 			while ((linea = br.readLine()) != null) {
-				String[] lineaCarta = linea.split("	");
+				String[] lineaCarta = linea.split(" ");
 				carta.add(lineaCarta);
 			}
 		} catch (IOException e) {
@@ -29,18 +29,51 @@ public class Entidades {
 	}
 	
 	// Enviar cartas con la entidad CNN
-	public static void generarCartaCCN(String nomArchivo) {
+	public static void generarCartaCCN(String nomArchivo, String nomCliente, String numNulidad, String nomEmpresa, String correo) {
 		String nombreEmpleado = "Chema Alonso";
 		String nombreCargo = "F";
-		String nombreEmpresa = "CNN";
+		String nombreEmpresa = "Centro Criptográfico Nacional";
 
 		try (BufferedReader br = new BufferedReader(new FileReader(nomArchivo + ".txt"))) {
 			carta.clear();
 			String linea;
 
 			while ((linea = br.readLine()) != null) {
-				String[] lineaCarta = linea.split("	");
+				String[] lineaCarta = linea.split(" ");
 				carta.add(lineaCarta);
+			}
+			
+			for (String[] fila : carta) {
+				for (int i = 0; i < fila.length; i++) {
+					if (fila[i].equals("[Nombre_cliente],")) {
+						fila[i] = nomCliente;
+					}
+					if (fila[i].equals("[Numero_nulidad].")) {
+						fila[i] = numNulidad;
+					}
+					if (fila[i].equals("[nombre_empresa],")) {
+						fila[i] = nomEmpresa;
+					}
+					if (fila[i].equals("[total_servicios].")) {
+						
+					}
+					if (fila[i].equals("[Lista_pago_servicios]")) {
+						String lista = Archivos.crearListaPagos(nombreEmpresa);
+						fila[i] = lista;
+					}
+					if (fila[i].equals("[correo_empresa_nulidad]")) {
+						fila[i] = correo;
+					}
+					if (fila[i].equals("[Su_nombre]")) {
+						fila[i] = nombreEmpleado;
+					}
+					if (fila[i].equals("[Su_cargo]")) {
+						fila[i] = nombreCargo;
+					}
+					if (fila[i].equals("[Su_empresa]")) {
+						fila[i] = nombreEmpresa;
+					}
+				}
 			}
 		} catch (IOException e) {
 			System.out.println("Error al generar la carta de nulidad.");
@@ -54,9 +87,9 @@ public class Entidades {
 	public static void imprimirCarta() {
 		for (String[] linea : carta) {
 			for (int i = 0; i < linea.length; i++) {
-				System.out.println(linea[i]);
+				System.out.print(linea[i] + " ");
 			}
+			System.out.println("");
 		}
-		System.out.println("");
 	}
 }
