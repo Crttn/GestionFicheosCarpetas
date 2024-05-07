@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Entidades {
 
@@ -27,9 +29,10 @@ public class Entidades {
 			System.out.println("Error al generar la carta de nulidad.");
 		}
 	}
-	
+
 	// Enviar cartas con la entidad CNN
-	public static void generarCartaCCN(String nomArchivo, String nomCliente, String numNulidad, String nomEmpresa, String correo) {
+	public static void generarCartaCCN(String nomArchivo, String nomCliente, String numNulidad, String nomEmpresa,
+			String correo) {
 		String nombreEmpleado = "Chema Alonso";
 		String nombreCargo = "F";
 		String nombreEmpresa = "Centro Criptográfico Nacional";
@@ -42,7 +45,7 @@ public class Entidades {
 				String[] lineaCarta = linea.split(" ");
 				carta.add(lineaCarta);
 			}
-			
+
 			for (String[] fila : carta) {
 				for (int i = 0; i < fila.length; i++) {
 					if (fila[i].equals("[Nombre_cliente],")) {
@@ -55,11 +58,10 @@ public class Entidades {
 						fila[i] = nomEmpresa;
 					}
 					if (fila[i].equals("[total_servicios].")) {
-						
+						fila[i] = Archivos.obtenerTotalPago(nomEmpresa) + " €";
 					}
 					if (fila[i].equals("[Lista_pago_servicios]")) {
-						String lista = Archivos.crearListaPagos(nombreEmpresa);
-						fila[i] = lista;
+						fila[i] = Archivos.crearListaPagos(nomEmpresa);
 					}
 					if (fila[i].equals("[correo_empresa_nulidad]")) {
 						fila[i] = correo;
@@ -79,9 +81,29 @@ public class Entidades {
 			System.out.println("Error al generar la carta de nulidad.");
 		}
 	}
-	
-	public static void rellenarCarta() {
-		
+
+	static ArrayList<String> empresasParaEnviar = new ArrayList<>();
+
+	public static void obtenerNombreEmpresaUnico() {
+		String empresa = "";
+
+		for (String[] registro : Archivos.archivos) {
+			empresa = registro[1];
+
+			if (!empresasParaEnviar.contains(empresa)) {
+				empresasParaEnviar.add(empresa);
+			}
+		}
+	}
+
+	public static void crearCartasCNN() {
+
+		obtenerNombreEmpresaUnico();
+
+		for (String registro : empresasParaEnviar) {
+			generarCartaCCN("Modelo2.txt", registro, registro, registro, registro);
+			
+		}
 	}
 
 	public static void imprimirCarta() {

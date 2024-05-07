@@ -21,9 +21,9 @@ public class Main {
 				sc.nextLine();
 				String archivo = Estilos.solicitarTexto(sc, "Introduce el nombre y la extención del archivo: ");
 				Archivos.cargarArchivo(archivo);
-				Entidades.generarCartaCCN("Modelo2", "Manolo", "18-2021", "Empresa004", "email@emrpesa.es");
+				Entidades.generarCartaCCN("Modelo2", "Manolo", "18-2021", "Empresa005", "email@emrpesa.es");
 				Entidades.imprimirCarta();
-				//System.out.println(Archivos.crearListaPagos("Empresa004"));
+				Entidades.crearCartasCNN();
 				break;
 			case 2:
 				break;

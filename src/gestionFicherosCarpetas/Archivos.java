@@ -2,12 +2,14 @@ package gestionFicherosCarpetas;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Archivos {
 
 	// Lista donde se almacenan todos los datos del archivo de nulidad
-	private static ArrayList<String[]> archivos = new ArrayList<>();
+	static ArrayList<String[]> archivos = new ArrayList<>();
 
 	// Carga los datos del arvhico de nulidad en el arrayList para su mejor manejo
 	public static void cargarArchivo(String nombre) {
@@ -48,14 +50,21 @@ public class Archivos {
 	public static String obtenerTotalPago(String empresa) {		
 		double sum = 0;
 		
-		for (String[] archivo : archivos) {
-			if (archivo[1].equals(empresa)) {
-				String formateado = archivo[2].replace(".", "");
-				double cantidad = Double.parseDouble(formateado);
-				sum += cantidad;
-			}
-		}
-		System.out.println(sum);
+		if (archivos == null) {
+	        return "No se encontraron registros";
+	    }
+
+	    for (String[] archivo : archivos) {
+	        if (archivo.length > 1 && archivo[1].equals(empresa)) {
+	            try {
+	                String formateado = archivo[2].replace(".", "").replace(",", ".");
+	                double cantidad = Double.parseDouble(formateado);
+	                sum += cantidad;
+	            } catch (NumberFormatException e) {
+	                System.err.println("Error en la conversión de valor numérico: " + e.getMessage());
+	            }
+	        }
+	    }
 		return Double.toString(sum);
 	}
 
@@ -95,6 +104,8 @@ public class Archivos {
 			System.out.println(i++);
 		}
 	}
+	
+
 
 	// Crear archivo de nulidad a partir de un nombre || Generar los correos
 	public static void crearArchivo(String nombre) {
